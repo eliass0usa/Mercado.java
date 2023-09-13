@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 import modelo.Produto;
+import utils.utils;
 
 public class Mercado {
 	private static Scanner input = new Scanner(System.in);
@@ -45,8 +46,8 @@ public class Mercado {
 			verCarrinho();
 			break;
 		case 5:
-			System.out.println("Obrigado pela preferência");
-			System.exit();
+			System.out.println("Volte sempre");
+			System.exit(0);
 		default:
 			System.out.println("Opção Inválida");
 			menu();
@@ -64,7 +65,7 @@ public class Mercado {
 		Produto produto = new Produto(nome, preco);
 		produtos.add(produto);
 
-		System.out.println(produto.getNome() + "Produto cadastrado com sucesso!");
+		System.out.println(produto.getNome() + " cadastrado com sucesso!");
 		menu();
 	}
 
@@ -105,7 +106,7 @@ public class Mercado {
 //						Se o produto for o primeiro do carrinho
 						carrinho.put(p, 1);
 					}
-					System.out.println(p.getNome() + "adicionado ao carrinho.");
+					System.out.println(p.getNome() + " adicionado ao carrinho.");
 					isPresent = true;
 
 					if (isPresent) {
@@ -131,4 +132,36 @@ public class Mercado {
 		}
 	}
 
+	private static void verCarrinho() {
+		System.out.println("----------Produtos no seu carrinho----------");
+		if (carrinho.size() > 0) {
+			for (Produto p : carrinho.keySet()) {
+				System.out.println("Produto: " + p + "\nQuantidade: " + carrinho.get(p));
+			}
+		} else {
+			System.out.println("Carrinho vazio!");
+		}
+
+		menu();
+
+	}
+
+	private static void finalizarCompra() {
+		Double valorDaCompra = 0.0;
+		System.out.println("Seus Produtos!");
+
+		for (Produto p : carrinho.keySet()) {
+			int qtd = carrinho.get(p);
+			valorDaCompra += p.getPreco() * qtd;
+			System.out.println(p);
+			System.out.println("Quantidade: " + qtd);
+			System.out.println("-------------------");
+
+		}
+		System.out.println("O valor da sua compra é: " + utils.doubleToString(valorDaCompra));
+
+		carrinho.clear();
+		System.out.println("Obrigado pela preferência.");
+
+	}
 }
